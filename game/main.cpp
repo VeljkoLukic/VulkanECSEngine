@@ -9,6 +9,7 @@
 #include "game/systems/AnimationSystem.h"
 #include "game/systems/InputSystem.h"
 #include "game/systems/BoardSystem.h"
+#include "engine/systems/FreeFlyCamera.h"
 
 #include <array>
 
@@ -58,10 +59,14 @@ int main() {
         InputSystem     inputSys(engine.window(), cam);
         BoardSystem     boardSys(reg, animSys, board, gemMeshes);
 
+        systems::FreeFlyCamera flyCam(engine.window(), cam);
+
         engine.setUpdateCallback([&](float dt) {
+            bool flying = flyCam.update(dt);
+
             animSys.update(dt);
 
-            if (boardSys.phase() == Phase::Idle) {
+            if (!flying && boardSys.phase() == Phase::Idle) {
                 int cursorCol = -1, cursorRow = -1;
                 auto input = inputSys.update(cursorCol, cursorRow);
 
