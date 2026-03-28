@@ -1,6 +1,7 @@
 #include "engine/core/Engine.h"
 #include "engine/components/Transform.h"
 #include "engine/components/Mesh.h"
+#include "engine/systems/FreeFlyCamera.h"
 #include <glm/gtc/quaternion.hpp>
 #include <cmath>
 
@@ -105,6 +106,12 @@ int main() {
         cam.up     = { 0.f, 1.f, 0.f };
 
         buildScene(engine.registry());
+
+        systems::FreeFlyCamera flyCam(engine.window(), cam);
+
+        engine.setUpdateCallback([&](float dt) {
+            bool flying = flyCam.update(dt);
+            });
 
         engine.run();
 
