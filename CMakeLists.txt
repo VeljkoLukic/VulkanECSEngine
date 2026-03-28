@@ -58,7 +58,7 @@ endif()
 set(SHADER_SRC_DIR ${CMAKE_SOURCE_DIR}/shaders)
 set(SHADER_BIN_DIR ${CMAKE_BINARY_DIR}/shaders)
 
-file(GLOB SHADER_SOURCES
+file(GLOB SHADER_SOURCES CONFIGURE_DEPENDS
     ${SHADER_SRC_DIR}/*.vert
     ${SHADER_SRC_DIR}/*.frag
 )
@@ -77,7 +77,7 @@ foreach(SHADER ${SHADER_SOURCES})
 endforeach()
 add_custom_target(Shaders ALL DEPENDS ${COMPILED_SHADERS})
 
-file(GLOB_RECURSE ENGINE_SOURCES ${CMAKE_SOURCE_DIR}/engine/*.cpp)
+file(GLOB_RECURSE ENGINE_SOURCES CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/engine/*.cpp)
 
 add_library(Engine STATIC ${ENGINE_SOURCES})
 add_dependencies(Engine Shaders)
@@ -109,7 +109,7 @@ target_compile_options(Engine PRIVATE
     $<$<CXX_COMPILER_ID:MSVC>:/W4 /utf-8>
 )
 
-file(GLOB_RECURSE GAME_SOURCES ${CMAKE_SOURCE_DIR}/game/*.cpp)
+file(GLOB_RECURSE GAME_SOURCES CONFIGURE_DEPENDS ${CMAKE_SOURCE_DIR}/game/*.cpp)
 
 add_executable(Game ${GAME_SOURCES})
 add_dependencies(Game Shaders)
