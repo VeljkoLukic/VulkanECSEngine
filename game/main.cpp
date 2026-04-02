@@ -18,6 +18,7 @@ using namespace config;
 int main() {
     try {
         core::Engine engine(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
+        engine.renderer().setClearColor(CLEAR_COLOR);
 
         auto& cam  = engine.camera();
         cam.eye    = { 0.0f, 0.0f, CAMERA_DISTANCE };
