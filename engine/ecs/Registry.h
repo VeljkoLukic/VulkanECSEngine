@@ -94,4 +94,4 @@ private:
     EntityID             m_next = 0;
 };
 
-} // namespace ecs
+}

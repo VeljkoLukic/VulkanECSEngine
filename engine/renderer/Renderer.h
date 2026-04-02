@@ -37,6 +37,8 @@ public:
     void uploadMesh(ecs::EntityID entity, const components::Mesh& mesh);
     void destroyMesh(ecs::EntityID entity);
 
+    void setClearColor(const glm::vec3& color) { m_clearColor = color; }
+
     bool beginFrame();
     void updateCamera(const components::Camera& cam);
     void drawMesh(ecs::EntityID entity, const components::Transform& transform);
@@ -79,7 +81,9 @@ private:
     uint32_t m_imageIndex   = 0;
     bool     m_frameStarted = false;
 
+    glm::vec3 m_clearColor { 0.0079f, 0.0079f, 0.0079f };
+
     std::unordered_map<ecs::EntityID, GPUMesh> m_gpuMeshes;
 };
 
-} // namespace renderer
+}

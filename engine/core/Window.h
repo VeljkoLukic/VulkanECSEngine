@@ -53,4 +53,4 @@ private:
     std::function<void(int,int)> m_resizeCb;
 };
 
-} // namespace core
+}

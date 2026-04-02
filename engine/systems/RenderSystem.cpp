@@ -16,4 +16,4 @@ void RenderSystem::update(const components::Camera& camera) {
         });
 }
 
-} // namespace systems
+}

@@ -62,4 +62,4 @@ private:
     VkImageView    m_depthView   = VK_NULL_HANDLE;
 };
 
-} // namespace renderer
+}

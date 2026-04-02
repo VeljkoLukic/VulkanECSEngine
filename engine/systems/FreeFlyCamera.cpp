@@ -113,4 +113,4 @@ void FreeFlyCamera::processMouse()
     m_pitch  = std::clamp(m_pitch, -89.0f, 89.0f);
 }
 
-} // namespace systems
+}

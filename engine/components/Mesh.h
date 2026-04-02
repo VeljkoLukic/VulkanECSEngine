@@ -36,4 +36,4 @@ struct Mesh {
     std::vector<uint32_t> indices;
 };
 
-} // namespace components
+}
