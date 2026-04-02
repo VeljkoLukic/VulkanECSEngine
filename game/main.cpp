@@ -18,51 +18,46 @@ struct Spin {
 };
 
 static components::Mesh makeCube() {
-    using V = components::Vertex;
+using V = components::Vertex;
 
-    const glm::vec3 c0 = { 0.369f, 0.005f, 0.045f };
-    const glm::vec3 c1 = { 0.657f, 0.430f, 0.038f };
-    const glm::vec3 c2 = { 0.061f, 0.223f, 0.455f };
-    const glm::vec3 c3 = { 0.026f, 0.258f, 0.095f };
-    const glm::vec3 c4 = { 0.254f, 0.024f, 0.761f };
+const glm::vec3 c0 = { 0.369f, 0.005f, 0.045f };
+const glm::vec3 c1 = { 0.657f, 0.430f, 0.038f };
+const glm::vec3 c2 = { 0.061f, 0.223f, 0.455f };
+const glm::vec3 c3 = { 0.026f, 0.258f, 0.095f };
+const glm::vec3 c4 = { 0.254f, 0.024f, 0.761f };
+const glm::vec3 c5 = { 0.75f,  0.72f,  0.68f  };
 
-    std::vector<V> verts = {
-        // Front  (c0)
-        { {-0.5f, -0.5f,  0.5f}, c0 },
-        { { 0.5f, -0.5f,  0.5f}, c0 },
-        { { 0.5f,  0.5f,  0.5f}, c0 },
-        { {-0.5f,  0.5f,  0.5f}, c0 },
+std::vector<V> verts = {
+    { {-0.5f, -0.5f,  0.5f}, c0 },
+    { { 0.5f, -0.5f,  0.5f}, c0 },
+    { { 0.5f,  0.5f,  0.5f}, c0 },
+    { {-0.5f,  0.5f,  0.5f}, c0 },
 
-        // Back   (c1)
-        { { 0.5f, -0.5f, -0.5f}, c1 },
-        { {-0.5f, -0.5f, -0.5f}, c1 },
-        { {-0.5f,  0.5f, -0.5f}, c1 },
-        { { 0.5f,  0.5f, -0.5f}, c1 },
+    { { 0.5f, -0.5f, -0.5f}, c1 },
+    { {-0.5f, -0.5f, -0.5f}, c1 },
+    { {-0.5f,  0.5f, -0.5f}, c1 },
+    { { 0.5f,  0.5f, -0.5f}, c1 },
 
-        // Left   (c2)
-        { {-0.5f, -0.5f, -0.5f}, c2 },
-        { {-0.5f, -0.5f,  0.5f}, c2 },
-        { {-0.5f,  0.5f,  0.5f}, c2 },
-        { {-0.5f,  0.5f, -0.5f}, c2 },
+    { {-0.5f, -0.5f, -0.5f}, c2 },
+    { {-0.5f, -0.5f,  0.5f}, c2 },
+    { {-0.5f,  0.5f,  0.5f}, c2 },
+    { {-0.5f,  0.5f, -0.5f}, c2 },
 
-        // Right  (c3)
-        { { 0.5f, -0.5f,  0.5f}, c3 },
-        { { 0.5f, -0.5f, -0.5f}, c3 },
-        { { 0.5f,  0.5f, -0.5f}, c3 },
-        { { 0.5f,  0.5f,  0.5f}, c3 },
+    { { 0.5f, -0.5f,  0.5f}, c3 },
+    { { 0.5f, -0.5f, -0.5f}, c3 },
+    { { 0.5f,  0.5f, -0.5f}, c3 },
+    { { 0.5f,  0.5f,  0.5f}, c3 },
 
-        // Top    (c4)
-        { {-0.5f,  0.5f,  0.5f}, c4 },
-        { { 0.5f,  0.5f,  0.5f}, c4 },
-        { { 0.5f,  0.5f, -0.5f}, c4 },
-        { {-0.5f,  0.5f, -0.5f}, c4 },
+    { {-0.5f,  0.5f,  0.5f}, c4 },
+    { { 0.5f,  0.5f,  0.5f}, c4 },
+    { { 0.5f,  0.5f, -0.5f}, c4 },
+    { {-0.5f,  0.5f, -0.5f}, c4 },
 
-        // Bottom (c0 again)
-        { {-0.5f, -0.5f, -0.5f}, c0 },
-        { { 0.5f, -0.5f, -0.5f}, c0 },
-        { { 0.5f, -0.5f,  0.5f}, c0 },
-        { {-0.5f, -0.5f,  0.5f}, c0 },
-    };
+    { {-0.5f, -0.5f, -0.5f}, c5 },
+    { { 0.5f, -0.5f, -0.5f}, c5 },
+    { { 0.5f, -0.5f,  0.5f}, c5 },
+    { {-0.5f, -0.5f,  0.5f}, c5 },
+};
 
     std::vector<uint32_t> idx;
     for (uint32_t face = 0; face < 6; ++face) {
@@ -86,7 +81,7 @@ static components::Mesh makePyramid() {
     const glm::vec3 cRight = { 0.657f, 0.430f, 0.038f };
     const glm::vec3 cBack  = { 0.061f, 0.223f, 0.455f };
     const glm::vec3 cLeft  = { 0.026f, 0.258f, 0.095f };
-    const glm::vec3 cBase  = { 0.254f, 0.024f, 0.761f };
+    const glm::vec3 cBase  = { 0.75f,  0.72f,  0.68f  };
 
     std::vector<V> verts = {
         { top, cFront }, { fl, cFront }, { fr, cFront },
@@ -107,40 +102,49 @@ static components::Mesh makePyramid() {
 static components::Mesh makeSphere(int stacks, int slices, float radius) {
     using V = components::Vertex;
 
-    const glm::vec3 c0 = { 0.369f, 0.005f, 0.045f };
-    const glm::vec3 c1 = { 0.657f, 0.430f, 0.038f };
-    const glm::vec3 c2 = { 0.061f, 0.223f, 0.455f };
-    const glm::vec3 c3 = { 0.026f, 0.258f, 0.095f };
-    const glm::vec3 c4 = { 0.254f, 0.024f, 0.761f };
-    const glm::vec3 palette[] = { c0, c1, c2, c3, c4 };
+    const glm::vec3 palette[] = {
+        { 0.369f, 0.005f, 0.045f },
+        { 0.657f, 0.430f, 0.038f },
+        { 0.061f, 0.223f, 0.455f },
+        { 0.026f, 0.258f, 0.095f },
+        { 0.254f, 0.024f, 0.761f },
+        { 0.75f,  0.72f,  0.68f  },
+    };
+    constexpr int numColors = 6;
+    constexpr int segments = 6;
+
+    auto spherePos = [&](int i, int j) -> glm::vec3 {
+        float phi   = glm::pi<float>() * static_cast<float>(i) / static_cast<float>(stacks);
+        float theta = 2.0f * glm::pi<float>() * static_cast<float>(j) / static_cast<float>(slices);
+        return {
+            radius * std::sin(phi) * std::cos(theta),
+            radius * std::cos(phi),
+            radius * std::sin(phi) * std::sin(theta),
+        };
+    };
 
     std::vector<V> verts;
     std::vector<uint32_t> idx;
 
-    for (int i = 0; i <= stacks; ++i) {
-        float phi = glm::pi<float>() * static_cast<float>(i) / static_cast<float>(stacks);
-        for (int j = 0; j <= slices; ++j) {
-            float theta = 2.0f * glm::pi<float>() * static_cast<float>(j) / static_cast<float>(slices);
-
-            glm::vec3 pos = {
-                radius * std::sin(phi) * std::cos(theta),
-                radius * std::cos(phi),
-                radius * std::sin(phi) * std::sin(theta),
-            };
-
-            // Colour by latitude band
-            int band = i * 5 / (stacks + 1);
-            verts.push_back({ pos, palette[band] });
-        }
-    }
-
     for (int i = 0; i < stacks; ++i) {
         for (int j = 0; j < slices; ++j) {
-            uint32_t a = static_cast<uint32_t>(i * (slices + 1) + j);
-            uint32_t b = a + static_cast<uint32_t>(slices + 1);
+            int seg = j * segments / slices;
+            const glm::vec3& col = palette[seg % numColors];
 
-            idx.insert(idx.end(), { a, b, a + 1 });
-            idx.insert(idx.end(), { a + 1, b, b + 1 });
+            glm::vec3 p00 = spherePos(i,     j);
+            glm::vec3 p10 = spherePos(i + 1, j);
+            glm::vec3 p11 = spherePos(i + 1, j + 1);
+            glm::vec3 p01 = spherePos(i,     j + 1);
+
+            auto base = static_cast<uint32_t>(verts.size());
+
+            verts.push_back({ p00, col });
+            verts.push_back({ p10, col });
+            verts.push_back({ p11, col });
+            verts.push_back({ p01, col });
+
+            idx.insert(idx.end(), { base, base + 1, base + 2 });
+            idx.insert(idx.end(), { base, base + 2, base + 3 });
         }
     }
 
@@ -168,9 +172,9 @@ static void buildScene(ecs::Registry& reg) {
         auto e = reg.create();
         reg.emplace<components::Transform>(e, components::Transform{
             .position = { 2.0f, 0.0f, 0.0f },
-            .scale    = { 0.7f, 0.7f, 0.7f },
+            .scale    = { 1.0f, 1.0f, 1.0f },
         });
-        reg.emplace<components::Mesh>(e, makeSphere(20, 24, 0.5f));
+        reg.emplace<components::Mesh>(e, makeSphere(24, 30, 0.6f));
         reg.emplace<Spin>(e, Spin{
             .baseYaw   = glm::radians(-20.0f),
             .basePitch = glm::radians(25.0f),
