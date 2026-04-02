@@ -41,4 +41,4 @@ private:
     components::Camera m_savedCamera;
 };
 
-} // namespace systems
+}

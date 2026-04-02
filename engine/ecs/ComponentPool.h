@@ -58,4 +58,4 @@ private:
     std::vector<T>        m_components;
 };
 
-} // namespace ecs
+}

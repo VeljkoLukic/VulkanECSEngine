@@ -16,4 +16,4 @@ private:
     renderer::Renderer& m_renderer;
 };
 
-} // namespace systems
+}

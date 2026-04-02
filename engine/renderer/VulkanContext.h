@@ -80,4 +80,4 @@ private:
     QueueFamilyIndices       m_families;
 };
 
-} // namespace renderer
+}

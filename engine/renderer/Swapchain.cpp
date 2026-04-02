@@ -273,4 +273,4 @@ VkExtent2D Swapchain::chooseExtent(const VkSurfaceCapabilitiesKHR& caps,
     };
 }
 
-} // namespace renderer
+}

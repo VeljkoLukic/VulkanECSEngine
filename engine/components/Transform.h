@@ -18,4 +18,4 @@ struct Transform {
     }
 };
 
-} // namespace components
+}

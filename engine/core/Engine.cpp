@@ -60,4 +60,4 @@ void Engine::onResize(int /*width*/, int /*height*/) {
     m_needsResize = true;
 }
 
-} // namespace core
+}

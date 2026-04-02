@@ -24,4 +24,4 @@ struct Camera {
     }
 };
 
-} // namespace components
+}

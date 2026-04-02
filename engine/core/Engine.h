@@ -45,4 +45,4 @@ private:
     bool     m_needsResize = false;
 };
 
-} // namespace core
+}
