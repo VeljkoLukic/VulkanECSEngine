@@ -1,117 +1,91 @@
-#include "engine/core/Engine.h"
+﻿#include "engine/core/Engine.h"
 #include "engine/components/Transform.h"
 #include "engine/components/Mesh.h"
+
+#include "game/config/GameConfig.h"
+#include "game/components/GameComponents.h"
+#include "game/board/Board.h"
+#include "game/board/MeshFactory.h"
+#include "game/systems/AnimationSystem.h"
+#include "game/systems/InputSystem.h"
+#include "game/systems/BoardSystem.h"
 #include "engine/systems/FreeFlyCamera.h"
-#include <glm/gtc/quaternion.hpp>
-#include <cmath>
 
-static components::Mesh makeCube() {
-    using V = components::Vertex;
+#include <array>
 
-    std::vector<V> verts = {
-        { {-0.5f, -0.5f,  0.5f}, {0.2f, 0.4f, 0.9f} },
-        { { 0.5f, -0.5f,  0.5f}, {0.2f, 0.4f, 0.9f} },
-        { { 0.5f,  0.5f,  0.5f}, {0.2f, 0.4f, 0.9f} },
-        { {-0.5f,  0.5f,  0.5f}, {0.2f, 0.4f, 0.9f} },
-
-        { { 0.5f, -0.5f, -0.5f}, {0.9f, 0.5f, 0.1f} },
-        { {-0.5f, -0.5f, -0.5f}, {0.9f, 0.5f, 0.1f} },
-        { {-0.5f,  0.5f, -0.5f}, {0.9f, 0.5f, 0.1f} },
-        { { 0.5f,  0.5f, -0.5f}, {0.9f, 0.5f, 0.1f} },
-
-        { {-0.5f, -0.5f, -0.5f}, {0.2f, 0.8f, 0.3f} },
-        { {-0.5f, -0.5f,  0.5f}, {0.2f, 0.8f, 0.3f} },
-        { {-0.5f,  0.5f,  0.5f}, {0.2f, 0.8f, 0.3f} },
-        { {-0.5f,  0.5f, -0.5f}, {0.2f, 0.8f, 0.3f} },
-
-        { { 0.5f, -0.5f,  0.5f}, {0.9f, 0.2f, 0.2f} },
-        { { 0.5f, -0.5f, -0.5f}, {0.9f, 0.2f, 0.2f} },
-        { { 0.5f,  0.5f, -0.5f}, {0.9f, 0.2f, 0.2f} },
-        { { 0.5f,  0.5f,  0.5f}, {0.9f, 0.2f, 0.2f} },
-
-        { {-0.5f,  0.5f,  0.5f}, {0.9f, 0.9f, 0.1f} },
-        { { 0.5f,  0.5f,  0.5f}, {0.9f, 0.9f, 0.1f} },
-        { { 0.5f,  0.5f, -0.5f}, {0.9f, 0.9f, 0.1f} },
-        { {-0.5f,  0.5f, -0.5f}, {0.9f, 0.9f, 0.1f} },
-
-        { {-0.5f, -0.5f, -0.5f}, {0.8f, 0.2f, 0.8f} },
-        { { 0.5f, -0.5f, -0.5f}, {0.8f, 0.2f, 0.8f} },
-        { { 0.5f, -0.5f,  0.5f}, {0.8f, 0.2f, 0.8f} },
-        { {-0.5f, -0.5f,  0.5f}, {0.8f, 0.2f, 0.8f} },
-    };
-
-    std::vector<uint32_t> idx;
-    for (uint32_t face = 0; face < 6; ++face) {
-        uint32_t b = face * 4;
-        idx.insert(idx.end(), { b, b+1, b+2, b+2, b+3, b });
-    }
-
-    return { std::move(verts), std::move(idx) };
-}
-
-static components::Mesh makePyramid() {
-    using V = components::Vertex;
-
-    std::vector<V> verts = {
-        { { 0.0f,  0.8f,  0.0f}, {1.0f, 1.0f, 1.0f} },
-        { {-0.5f, -0.4f,  0.5f}, {0.4f, 0.8f, 0.9f} },
-        { { 0.5f, -0.4f,  0.5f}, {0.9f, 0.4f, 0.4f} },
-        { { 0.5f, -0.4f, -0.5f}, {0.4f, 0.9f, 0.4f} },
-        { {-0.5f, -0.4f, -0.5f}, {0.9f, 0.8f, 0.3f} },
-    };
-
-    std::vector<uint32_t> idx = {
-        0,1,2,  0,2,3,  0,3,4,  0,4,1,
-        1,3,2,  1,4,3,
-    };
-
-    return { std::move(verts), std::move(idx) };
-}
-
-static void buildScene(ecs::Registry& reg) {
-    {
-        auto e = reg.create();
-        reg.emplace<components::Transform>(e, components::Transform{
-            .position = { 0.0f, 0.0f, 0.0f },
-        });
-        reg.emplace<components::Mesh>(e, makeCube());
-    }
-
-    {
-        auto e = reg.create();
-        reg.emplace<components::Transform>(e, components::Transform{
-            .position = { 2.0f, 0.0f, 0.0f },
-            .rotation = glm::angleAxis(glm::radians(45.0f), glm::vec3(0,1,0)),
-            .scale    = { 0.6f, 0.6f, 0.6f },
-        });
-        reg.emplace<components::Mesh>(e, makeCube());
-    }
-
-    {
-        auto e = reg.create();
-        reg.emplace<components::Transform>(e, components::Transform{
-            .position = { -2.0f, 0.0f, 0.0f },
-        });
-        reg.emplace<components::Mesh>(e, makePyramid());
-    }
-}
+using namespace config;
 
 int main() {
     try {
-        core::Engine engine(1280, 720, "Vulkan ECS Engine");
+        core::Engine engine(WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_TITLE);
+        engine.renderer().setClearColor(CLEAR_COLOR);
 
         auto& cam  = engine.camera();
-        cam.eye    = { 0.0f, 2.0f, 6.0f };
+        cam.eye    = { 0.0f, 0.0f, CAMERA_DISTANCE };
         cam.target = { 0.0f, 0.0f, 0.0f };
         cam.up     = { 0.0f, 1.0f, 0.0f };
+        cam.fovY   = CAMERA_FOV;
 
-        buildScene(engine.registry());
+        auto& reg = engine.registry();
+
+        Board board;
+        fillBoardNoMatches(board);
+
+        std::array<components::Mesh, NUM_TYPES> gemMeshes;
+        for (int i = 0; i < NUM_TYPES; ++i)
+            gemMeshes[i] = makeGemMesh(i);
+
+        for (int c = 0; c < BOARD_W; ++c) {
+            for (int r = 0; r < BOARD_H; ++r) {
+                auto e = reg.create();
+                reg.emplace<components::Transform>(e, components::Transform{
+                    .position = boardToWorld(c, r),
+                    .scale    = glm::vec3(GEM_SCALE),
+                });
+                reg.emplace<components::Mesh>(e, gemMeshes[board.grid[c][r]]);
+                reg.emplace<GemType>(e, GemType{ board.grid[c][r] });
+                reg.emplace<BoardPos>(e, BoardPos{ c, r });
+                board.entities[c][r] = e;
+            }
+        }
+
+        auto cursorEntity = reg.create();
+        reg.emplace<components::Transform>(cursorEntity, components::Transform{
+            .position = CURSOR_HIDDEN,
+            .scale    = glm::vec3(GEM_SCALE * CURSOR_SCALE_MULT),
+        });
+        reg.emplace<components::Mesh>(cursorEntity, makeCursorMesh());
+
+        AnimationSystem animSys(reg, engine.renderer());
+        InputSystem     inputSys(engine.window(), cam);
+        BoardSystem     boardSys(reg, animSys, board, gemMeshes);
 
         systems::FreeFlyCamera flyCam(engine.window(), cam);
 
         engine.setUpdateCallback([&](float dt) {
             bool flying = flyCam.update(dt);
-            });
+
+            animSys.update(dt);
+
+            if (!flying && boardSys.phase() == Phase::Idle) {
+                int cursorCol = -1, cursorRow = -1;
+                auto input = inputSys.update(cursorCol, cursorRow);
+
+                if (cursorCol >= 0 && cursorRow >= 0)
+                    reg.get<components::Transform>(cursorEntity).position =
+                        boardToWorld(cursorCol, cursorRow) + glm::vec3(0.0f, 0.0f, CURSOR_Z_OFFSET);
+                else
+                    reg.get<components::Transform>(cursorEntity).position = CURSOR_HIDDEN;
+
+                if (input.wantSwap) {
+                    boardSys.beginSwap(input.fromCol, input.fromRow,
+                                       input.toCol,   input.toRow);
+                    inputSys.clearSelection();
+                }
+            }
+
+            boardSys.update();
+        });
 
         engine.run();
 
