@@ -4,6 +4,10 @@ A minimal game engine written in C++20 with Vulkan
 
 ---
 
+![demo](https://github.com/user-attachments/assets/43e76357-cc29-4d49-a576-cce8fb7f4f2d)
+
+---
+
 ## Architecture
 
 ```
